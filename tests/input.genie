@@ -1,0 +1,43 @@
+feature unique_name
+ 
+requires
+ - package/version
+ - package2/version
+
+parallelism scenario
+
+@attr searchtags list...
+@attr somethingelse list...
+scenario "test with {a} {b} {c}"
+    do n times
+        given $a $b $c
+        when 
+        then
+        and
+        but
+        call 
+        *
+    done report stats 
+end
+
+examples
+|a | b| c|
+end
+
+# comment
+
+## 
+block comment
+
+tests/
+    epic1/
+        feature1.gfe
+        feature2.gfe
+        grammar/
+            grammarfile.jar
+            grammarfile.py
+            grammarfile.js
+            grammarfile.toml
+            package.json
+
+##

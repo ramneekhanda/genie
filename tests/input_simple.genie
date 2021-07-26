@@ -1,0 +1,14 @@
+#asdasd 
+FEATURE "something"
+
+#asdasd
+SCENARIO "asd"
+    # woops
+    GIVEN i was out
+    do 5 times 
+        given i send myself to <moon>
+    done 
+
+#what a life
+SCENARIO: "aasd"
+    given shit hit the fam
