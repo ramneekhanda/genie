@@ -30,9 +30,10 @@ fragment DIGIT: '0'..'9';
 fragment LETTERS: 'a'..'z';
 fragment CLETTERS: 'A'..'Z';
 fragment SYMBOLS: '~'|'!'|'@'|'$'|'%'|'^'|'&'
-    |'*'|'('|')'|'-'|'+'|'_'|','|'.'|'/'
+    |'*'|'('|')'|'+'|'_'|','|'.'
     |'?'|';'|'\''|'['|']'|'{'|'}'|':';
-
+// missing # \ " - /
+// 
 FEATURE: F E A T U R E;
 REQUIRES: R E Q U I R E S;
 PARALLELISM: P A R A L L E L I S M;
@@ -52,7 +53,7 @@ DONE: D O N E;
 INT: DIGIT+;
 WORD: (LETTERS|CLETTERS|DIGIT|SYMBOLS)+;
 WS: ' ' -> channel(HIDDEN);
-EOLN: '\n'|'\r\n';
+EOLN: '\n';
 PACKAGE_VERSION_SPLITTER: '/';
 LIST_ITEM: '-';
 SINGLE_LINE_COMMENT: '#';
@@ -63,7 +64,7 @@ quoted_words: STRING_QUOTES (ESC_QUOTE|WORD|ESC_BACKSLASH)* STRING_QUOTES;
 feature_defn: (commented_lines)* FEATURE quoted_words EOLN+;
 package_defn: WORD PACKAGE_VERSION_SPLITTER WORD;
 requires_single_line: (commented_lines)* REQUIRES package_defn EOLN+;
-requires_multi_line: (commented_lines)* REQUIRES EOLN ((commented_lines)* LIST_ITEM package_defn EOLN)+;
+requires_multi_line: (commented_lines)* REQUIRES EOLN ((commented_lines)* LIST_ITEM package_defn EOLN)+ (EOLN)*;
 requires_defn: requires_single_line | requires_multi_line;
 parallelism_defn: (commented_lines)* PARALLELISM SCENARIO EOLN+;
 scenario_decl: (commented_lines)* SCENARIO quoted_words EOLN+;

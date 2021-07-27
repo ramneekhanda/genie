@@ -1,7 +1,10 @@
 #comments
 feature "something"
 
-#some more comments +_-%_%
+requires
+    # abc library
+    - abc/2.0.0
+    # another comment asdasd ??
 
 SCENARIO "asd! is not? \""
     GIVEN we was out

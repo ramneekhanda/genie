@@ -33,6 +33,4 @@ add_executable(genie ${GRAMMAR_FILES} src/main.cxx)
 target_compile_definitions(genie PUBLIC "-DANTLR4CPP_STATIC")
 target_include_directories(genie PUBLIC ${ANTLR_OUT_PATH} ${ANTLR4_INCLUDE_DIRS})
 target_link_directories(genie PUBLIC ${ANTLR4_LIBS_DIRS})
-target_link_libraries(genie PRIVATE antlr4-runtime)
-
-# link required libraries
+target_link_libraries(genie PUBLIC ${ANTLR4_LIBS_DIRS}/libantlr4-runtime.a)
