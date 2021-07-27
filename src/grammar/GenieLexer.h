@@ -1,5 +1,5 @@
 
-// Generated from grammar/Genie.g4 by ANTLR 4.9.2
+// Generated from /Users/ramneekhanda/workspace/genie/grammar/Genie.g4 by ANTLR 4.9.2
 
 #pragma once
 
@@ -13,9 +13,10 @@ class  GenieLexer : public antlr4::Lexer {
 public:
   enum {
     FEATURE = 1, REQUIRES = 2, PARALLELISM = 3, AT = 4, ATTR = 5, SCENARIO = 6, 
-    STRING_QUOTES = 7, DO = 8, TIMES = 9, GIVEN = 10, WHEN = 11, NON_ALPHANUM = 12, 
-    THEN = 13, AND = 14, BUT = 15, CALL = 16, DONE = 17, INT = 18, WORD = 19, 
-    WS = 20, EOLN = 21, PACKAGE_VERSION_SPLITTER = 22, LIST_ITEM = 23, SINGLE_LINE_COMMENT = 24
+    STRING_QUOTES = 7, DO = 8, TIMES = 9, GIVEN = 10, WHEN = 11, THEN = 12, 
+    AND = 13, BUT = 14, CALL = 15, DONE = 16, INT = 17, WORD = 18, WS = 19, 
+    EOLN = 20, PACKAGE_VERSION_SPLITTER = 21, LIST_ITEM = 22, SINGLE_LINE_COMMENT = 23, 
+    ESC_QUOTE = 24, ESC_BACKSLASH = 25
   };
 
   explicit GenieLexer(antlr4::CharStream *input);

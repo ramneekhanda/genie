@@ -26,6 +26,12 @@ fragment W : [wW];
 fragment X : [xX];
 fragment Y : [yY];
 fragment Z : [zZ];
+fragment DIGIT: '0'..'9';
+fragment LETTERS: 'a'..'z';
+fragment CLETTERS: 'A'..'Z';
+fragment SYMBOLS: '~'|'!'|'@'|'$'|'%'|'^'|'&'
+    |'*'|'('|')'|'-'|'+'|'_'|','|'.'|'/'
+    |'?'|';'|'\''|'['|']'|'{'|'}'|':';
 
 FEATURE: F E A T U R E;
 REQUIRES: R E Q U I R E S;
@@ -38,28 +44,29 @@ DO: D O;
 TIMES: T I M E S;
 GIVEN: G I V E N;
 WHEN: W H E N;
-NON_ALPHANUM: [^a-zA-Z0-9];
 THEN: T H E N;
 AND: A N D;
 BUT: B U T;
 CALL: C A L L;
 DONE: D O N E;
-INT: [0-9]+;
-WORD: [a-zA-Z0-9.]+;
+INT: DIGIT+;
+WORD: (LETTERS|CLETTERS|DIGIT|SYMBOLS)+;
 WS: ' ' -> channel(HIDDEN);
-EOLN: '\n';
+EOLN: '\n'|'\r\n';
 PACKAGE_VERSION_SPLITTER: '/';
 LIST_ITEM: '-';
 SINGLE_LINE_COMMENT: '#';
+ESC_QUOTE: '\\"';
+ESC_BACKSLASH: '\\\\';
 
-quoted_words: STRING_QUOTES (WORD)* STRING_QUOTES;
+quoted_words: STRING_QUOTES (ESC_QUOTE|WORD|ESC_BACKSLASH)* STRING_QUOTES;
 feature_defn: (commented_lines)* FEATURE quoted_words EOLN+;
 package_defn: WORD PACKAGE_VERSION_SPLITTER WORD;
 requires_single_line: (commented_lines)* REQUIRES package_defn EOLN+;
 requires_multi_line: (commented_lines)* REQUIRES EOLN ((commented_lines)* LIST_ITEM package_defn EOLN)+;
 requires_defn: requires_single_line | requires_multi_line;
 parallelism_defn: (commented_lines)* PARALLELISM SCENARIO EOLN+;
-scenario_decl: (commented_lines)* SCENARIO STRING_QUOTES (WORD)+ STRING_QUOTES EOLN+;
+scenario_decl: (commented_lines)* SCENARIO quoted_words EOLN+;
 do_start: (commented_lines)* DO INT TIMES EOLN+;
 do_end: (commented_lines)* DONE EOLN+;
 do_loop: do_start (do_statement)* do_end;

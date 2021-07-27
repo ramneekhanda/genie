@@ -1,14 +1,13 @@
-#asdasd 
-FEATURE "something"
+#comments
+feature "something"
 
-#asdasd
-SCENARIO "asd"
-    # woops
-    GIVEN i was out
-    do 5 times 
-        given i send myself to <moon>
-    done 
+#some more comments +_-%_%
 
-#what a life
-SCENARIO: "aasd"
+SCENARIO "asd! is not? \""
+    GIVEN we was out
+    do 1 times
+        given we send myself to moon
+    done
+
+SCENARIO "aasd"
     given shit hit the fam

@@ -1,0 +1,12 @@
+feature "something"
+
+SCENARIO "asd! is not?"
+    # woops
+    GIVEN we was out
+    do 1 times
+        given we send myself to moon
+    done 
+
+#what
+SCENARIO "aasd"
+    given shit hit the fam
