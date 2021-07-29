@@ -1,5 +1,5 @@
 
-// Generated from /Users/ramneekhanda/workspace/genie/grammar/Genie.g4 by ANTLR 4.9.2
+// Generated from /Users/ramneekhanda/workspace/genie/grammar/GenieLexer.g4 by ANTLR 4.9.2
 
 #pragma once
 
@@ -12,11 +12,18 @@
 class  GenieLexer : public antlr4::Lexer {
 public:
   enum {
-    FEATURE = 1, REQUIRES = 2, PARALLELISM = 3, AT = 4, ATTR = 5, SCENARIO = 6, 
-    STRING_QUOTES = 7, DO = 8, TIMES = 9, GIVEN = 10, WHEN = 11, THEN = 12, 
-    AND = 13, BUT = 14, CALL = 15, DONE = 16, INT = 17, WORD = 18, WS = 19, 
-    EOLN = 20, PACKAGE_VERSION_SPLITTER = 21, LIST_ITEM = 22, SINGLE_LINE_COMMENT = 23, 
-    ESC_QUOTE = 24, ESC_BACKSLASH = 25
+    FRAGMENT = 1, BACKGROUND = 2, FEATURE = 3, TAGS = 4, SCENARIO = 5, STRING_QUOTES_OPEN = 6, 
+    DO = 7, ACT = 8, DONE = 9, WS = 10, EOLN = 11, COLN = 12, PACKAGE_VERSION_SPLITTER = 13, 
+    LIST_ITEM = 14, SINGLE_LINE_COMMENT = 15, NOTE = 16, WORD = 17, ESC_QUOTE = 18, 
+    ESC_BACKSLASH = 19, SIMPLE_QUOTE = 20, STRING_QUOTES_CLOSE = 21, EOT = 22, 
+    TAG_WORD = 23, WS_TAGS = 24, EON = 25, NOTE_TEXT = 26, WS_NOTE = 27, 
+    EOLN_NOTE = 28, COLN_NOTE = 29, EOA = 30, ACTION_TEXT = 31, EOC = 32, 
+    COMMENT_TEXT = 33, INT = 34, TIMES = 35, WS_DO = 36
+  };
+
+  enum {
+    In_Quotes = 1, In_Tags = 2, In_Note = 3, In_Act = 4, In_Comment = 5, 
+    In_Do = 6
   };
 
   explicit GenieLexer(antlr4::CharStream *input);

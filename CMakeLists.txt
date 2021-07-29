@@ -27,7 +27,7 @@ set(ANTLR_OUT_PATH ${PROJECT_SOURCE_DIR}/src/grammar)
 file(GLOB GRAMMAR_FILES ${ANTLR_OUT_PATH}/*.cpp)
 
 add_custom_target(grammar
-  COMMAND java -Xmx500M -cp ${ANTLR4_BIN}:$$CLASSPATH org.antlr.v4.Tool -Dlanguage=Cpp  ${PROJECT_SOURCE_DIR}/grammar/Genie.g4 -o ${ANTLR_OUT_PATH})
+  COMMAND java -Xmx500M -cp ${ANTLR4_BIN}:$$CLASSPATH org.antlr.v4.Tool -Dlanguage=Cpp ${PROJECT_SOURCE_DIR}/grammar/GenieLexer.g4  ${PROJECT_SOURCE_DIR}/grammar/GenieParser.g4 -o ${ANTLR_OUT_PATH})
 
 add_executable(genie ${GRAMMAR_FILES} src/main.cxx)
 target_compile_definitions(genie PUBLIC "-DANTLR4CPP_STATIC")

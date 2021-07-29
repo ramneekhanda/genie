@@ -1,16 +1,49 @@
-#comments
-feature "something"
+note: ...
 
-requires
-    # abc library
-    - abc/2.0.0
-    # another comment asdasd ??
+note: asd
+      asd...
 
-SCENARIO "asd! is not? \""
-    GIVEN we was out
-    do 1 times
-        given we send myself to moon
+requirement: something...
+
+feature: "something"
+
+note: asd
+      asd...
+
+background:
+    given i have 10 dollars
+    do 10 times:
+        and i spend 1 dollar <kjhjkh> "gfhf"
     done
+    then i have 0 dollars left
 
-SCENARIO "aasd"
-    given shit hit the fam
+note: asd
+      asd...
+
+note: ...
+
+fragment: "subtract {A} from {B} as {C}"
+    given i subtract {A} from {B}
+    and store result in {C}
+
+note: asd
+      asd...
+
+fragment: "get {N}th row {J}th column from csv"
+
+note: asd
+      asd...
+
+scenario: "check that"
+    given i have 10 dollars
+
+    do 10 times:
+        and i spend 1 dollar <kjhjkh> "gfhf"
+    done
+    then i have 0 dollars left
+
+note: asd
+      asd...
+
+@tags sdasd
+scenario: ""

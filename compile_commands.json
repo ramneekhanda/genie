@@ -1,23 +1,23 @@
 [
 {
   "directory": "/Users/ramneekhanda/workspace/genie",
-  "command": "/usr/bin/c++ -DANTLR4CPP_STATIC -I/Users/ramneekhanda/workspace/genie/antlr/antlr4-runtime-mac/antlr4-runtime -I/Users/ramneekhanda/workspace/genie/src/grammar -Wall -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -std=gnu++11 -o CMakeFiles/genie.dir/src/grammar/GenieBaseListener.cpp.o -c /Users/ramneekhanda/workspace/genie/src/grammar/GenieBaseListener.cpp",
-  "file": "/Users/ramneekhanda/workspace/genie/src/grammar/GenieBaseListener.cpp"
-},
-{
-  "directory": "/Users/ramneekhanda/workspace/genie",
   "command": "/usr/bin/c++ -DANTLR4CPP_STATIC -I/Users/ramneekhanda/workspace/genie/antlr/antlr4-runtime-mac/antlr4-runtime -I/Users/ramneekhanda/workspace/genie/src/grammar -Wall -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -std=gnu++11 -o CMakeFiles/genie.dir/src/grammar/GenieLexer.cpp.o -c /Users/ramneekhanda/workspace/genie/src/grammar/GenieLexer.cpp",
   "file": "/Users/ramneekhanda/workspace/genie/src/grammar/GenieLexer.cpp"
 },
 {
   "directory": "/Users/ramneekhanda/workspace/genie",
-  "command": "/usr/bin/c++ -DANTLR4CPP_STATIC -I/Users/ramneekhanda/workspace/genie/antlr/antlr4-runtime-mac/antlr4-runtime -I/Users/ramneekhanda/workspace/genie/src/grammar -Wall -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -std=gnu++11 -o CMakeFiles/genie.dir/src/grammar/GenieListener.cpp.o -c /Users/ramneekhanda/workspace/genie/src/grammar/GenieListener.cpp",
-  "file": "/Users/ramneekhanda/workspace/genie/src/grammar/GenieListener.cpp"
+  "command": "/usr/bin/c++ -DANTLR4CPP_STATIC -I/Users/ramneekhanda/workspace/genie/antlr/antlr4-runtime-mac/antlr4-runtime -I/Users/ramneekhanda/workspace/genie/src/grammar -Wall -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -std=gnu++11 -o CMakeFiles/genie.dir/src/grammar/GenieParser.cpp.o -c /Users/ramneekhanda/workspace/genie/src/grammar/GenieParser.cpp",
+  "file": "/Users/ramneekhanda/workspace/genie/src/grammar/GenieParser.cpp"
 },
 {
   "directory": "/Users/ramneekhanda/workspace/genie",
-  "command": "/usr/bin/c++ -DANTLR4CPP_STATIC -I/Users/ramneekhanda/workspace/genie/antlr/antlr4-runtime-mac/antlr4-runtime -I/Users/ramneekhanda/workspace/genie/src/grammar -Wall -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -std=gnu++11 -o CMakeFiles/genie.dir/src/grammar/GenieParser.cpp.o -c /Users/ramneekhanda/workspace/genie/src/grammar/GenieParser.cpp",
-  "file": "/Users/ramneekhanda/workspace/genie/src/grammar/GenieParser.cpp"
+  "command": "/usr/bin/c++ -DANTLR4CPP_STATIC -I/Users/ramneekhanda/workspace/genie/antlr/antlr4-runtime-mac/antlr4-runtime -I/Users/ramneekhanda/workspace/genie/src/grammar -Wall -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -std=gnu++11 -o CMakeFiles/genie.dir/src/grammar/GenieParserBaseListener.cpp.o -c /Users/ramneekhanda/workspace/genie/src/grammar/GenieParserBaseListener.cpp",
+  "file": "/Users/ramneekhanda/workspace/genie/src/grammar/GenieParserBaseListener.cpp"
+},
+{
+  "directory": "/Users/ramneekhanda/workspace/genie",
+  "command": "/usr/bin/c++ -DANTLR4CPP_STATIC -I/Users/ramneekhanda/workspace/genie/antlr/antlr4-runtime-mac/antlr4-runtime -I/Users/ramneekhanda/workspace/genie/src/grammar -Wall -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk -std=gnu++11 -o CMakeFiles/genie.dir/src/grammar/GenieParserListener.cpp.o -c /Users/ramneekhanda/workspace/genie/src/grammar/GenieParserListener.cpp",
+  "file": "/Users/ramneekhanda/workspace/genie/src/grammar/GenieParserListener.cpp"
 },
 {
   "directory": "/Users/ramneekhanda/workspace/genie",
