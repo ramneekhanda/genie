@@ -16,8 +16,8 @@
 class  GenieParserBaseListener : public GenieParserListener {
 public:
 
-  virtual void enterQuoted_words(GenieParser::Quoted_wordsContext * /*ctx*/) override { }
-  virtual void exitQuoted_words(GenieParser::Quoted_wordsContext * /*ctx*/) override { }
+  virtual void enterQuoted_string(GenieParser::Quoted_stringContext * /*ctx*/) override { }
+  virtual void exitQuoted_string(GenieParser::Quoted_stringContext * /*ctx*/) override { }
 
   virtual void enterFeature_defn(GenieParser::Feature_defnContext * /*ctx*/) override { }
   virtual void exitFeature_defn(GenieParser::Feature_defnContext * /*ctx*/) override { }
@@ -40,6 +40,12 @@ public:
   virtual void enterDo_statement(GenieParser::Do_statementContext * /*ctx*/) override { }
   virtual void exitDo_statement(GenieParser::Do_statementContext * /*ctx*/) override { }
 
+  virtual void enterDo_ffi(GenieParser::Do_ffiContext * /*ctx*/) override { }
+  virtual void exitDo_ffi(GenieParser::Do_ffiContext * /*ctx*/) override { }
+
+  virtual void enterDo_code(GenieParser::Do_codeContext * /*ctx*/) override { }
+  virtual void exitDo_code(GenieParser::Do_codeContext * /*ctx*/) override { }
+
   virtual void enterDo_multiline_string(GenieParser::Do_multiline_stringContext * /*ctx*/) override { }
   virtual void exitDo_multiline_string(GenieParser::Do_multiline_stringContext * /*ctx*/) override { }
 
@@ -54,6 +60,9 @@ public:
 
   virtual void enterFragment_decl(GenieParser::Fragment_declContext * /*ctx*/) override { }
   virtual void exitFragment_decl(GenieParser::Fragment_declContext * /*ctx*/) override { }
+
+  virtual void enterFragment_decl2(GenieParser::Fragment_decl2Context * /*ctx*/) override { }
+  virtual void exitFragment_decl2(GenieParser::Fragment_decl2Context * /*ctx*/) override { }
 
   virtual void enterTag_defn(GenieParser::Tag_defnContext * /*ctx*/) override { }
   virtual void exitTag_defn(GenieParser::Tag_defnContext * /*ctx*/) override { }

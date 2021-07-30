@@ -16,6 +16,7 @@ background:
         and i spend 1 dollar <kjhjkh> "gfhf"
     done
     then i have 0 dollars left
+end
 
 note: asd
       asd...
@@ -28,14 +29,32 @@ fragment: "subtract {A} from {B} as {C}"
     set aNumber as 9
     set aString as """a long asdasd string"""
     set aMultiLineText as
-    """a long asdasd string"""
+    """a long asdasd
+    string"""
+end
+
+fragment js: "add {a}, {b} using nodejs"
+```
+let a = {a};
+let b = {b};
+return a + b;
+```
+end
+
+fragment lua: "add using lua"
+```
+```
+end
 
 note: asd
       asd...
 
-
 fragment: "get {N}th row {J}th column from csv"
     set aVar as 9
+    set aVal as
+    """ramneek
+    handa"""
+end
 
 note: asd
       asd...
@@ -47,9 +66,11 @@ scenario: "check that"
         and i spend 1 dollar <kjhjkh> "gfhf"
     done
     then i have 0 dollars left
+end
 
 note: asd
       asd...
 
 @tags sdasd
 scenario: ""
+end

@@ -13,12 +13,20 @@ ACT: ('given'|'when'|'then'|'and'|'but'|'call') -> pushMode(In_Act);
 DONE: 'done';
 WS: ' ' -> channel(HIDDEN);
 EOLN: '\n';
+END: 'end';
 COLN: ':';
 PACKAGE_VERSION_SPLITTER: '/';
 LIST_ITEM: '-';
-SINGLE_LINE_COMMENT: '#' -> pushMode(In_Comment);
-NOTE: ('note' | 'requirement' | 'bugid')  -> pushMode(In_Note);
+NOTE: ('note' | 'requirement')  -> pushMode(In_Note);
 SET: 'set' -> pushMode(In_Set);
+LANG_ID: [a-z0-9]+;
+START_CODE: '```' -> pushMode(In_Code);
+
+mode In_Code;
+CODE: ( ~[`"\r\n\\] | ESC_SEQ_CODE )* ;
+ESC_SEQ_CODE : '\\' ( [btf"`\\] );
+EOL_CODE     : '\r' ? '\n' ;
+END_CODE: '```' -> popMode;
 
 mode In_Set;
 AS: 'as';
@@ -56,10 +64,6 @@ COLN_NOTE: ':';
 mode In_Act;
 EOA: '\n' -> popMode;
 ACTION_TEXT: ~[\r\n]+;
-
-mode In_Comment;
-EOC: '\n' -> popMode;
-COMMENT_TEXT: ~[\r\n"]+;
 
 mode In_Do;
 INT: DIGIT+;

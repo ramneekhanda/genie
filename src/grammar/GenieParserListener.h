@@ -14,8 +14,8 @@
 class  GenieParserListener : public antlr4::tree::ParseTreeListener {
 public:
 
-  virtual void enterQuoted_words(GenieParser::Quoted_wordsContext *ctx) = 0;
-  virtual void exitQuoted_words(GenieParser::Quoted_wordsContext *ctx) = 0;
+  virtual void enterQuoted_string(GenieParser::Quoted_stringContext *ctx) = 0;
+  virtual void exitQuoted_string(GenieParser::Quoted_stringContext *ctx) = 0;
 
   virtual void enterFeature_defn(GenieParser::Feature_defnContext *ctx) = 0;
   virtual void exitFeature_defn(GenieParser::Feature_defnContext *ctx) = 0;
@@ -38,6 +38,12 @@ public:
   virtual void enterDo_statement(GenieParser::Do_statementContext *ctx) = 0;
   virtual void exitDo_statement(GenieParser::Do_statementContext *ctx) = 0;
 
+  virtual void enterDo_ffi(GenieParser::Do_ffiContext *ctx) = 0;
+  virtual void exitDo_ffi(GenieParser::Do_ffiContext *ctx) = 0;
+
+  virtual void enterDo_code(GenieParser::Do_codeContext *ctx) = 0;
+  virtual void exitDo_code(GenieParser::Do_codeContext *ctx) = 0;
+
   virtual void enterDo_multiline_string(GenieParser::Do_multiline_stringContext *ctx) = 0;
   virtual void exitDo_multiline_string(GenieParser::Do_multiline_stringContext *ctx) = 0;
 
@@ -52,6 +58,9 @@ public:
 
   virtual void enterFragment_decl(GenieParser::Fragment_declContext *ctx) = 0;
   virtual void exitFragment_decl(GenieParser::Fragment_declContext *ctx) = 0;
+
+  virtual void enterFragment_decl2(GenieParser::Fragment_decl2Context *ctx) = 0;
+  virtual void exitFragment_decl2(GenieParser::Fragment_decl2Context *ctx) = 0;
 
   virtual void enterTag_defn(GenieParser::Tag_defnContext *ctx) = 0;
   virtual void exitTag_defn(GenieParser::Tag_defnContext *ctx) = 0;
