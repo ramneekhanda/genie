@@ -34,8 +34,17 @@ public:
   virtual void enterDo_action(GenieParser::Do_actionContext * /*ctx*/) override { }
   virtual void exitDo_action(GenieParser::Do_actionContext * /*ctx*/) override { }
 
+  virtual void enterDo_set(GenieParser::Do_setContext * /*ctx*/) override { }
+  virtual void exitDo_set(GenieParser::Do_setContext * /*ctx*/) override { }
+
   virtual void enterDo_statement(GenieParser::Do_statementContext * /*ctx*/) override { }
   virtual void exitDo_statement(GenieParser::Do_statementContext * /*ctx*/) override { }
+
+  virtual void enterDo_multiline_string(GenieParser::Do_multiline_stringContext * /*ctx*/) override { }
+  virtual void exitDo_multiline_string(GenieParser::Do_multiline_stringContext * /*ctx*/) override { }
+
+  virtual void enterAction_text(GenieParser::Action_textContext * /*ctx*/) override { }
+  virtual void exitAction_text(GenieParser::Action_textContext * /*ctx*/) override { }
 
   virtual void enterScenario_decl(GenieParser::Scenario_declContext * /*ctx*/) override { }
   virtual void exitScenario_decl(GenieParser::Scenario_declContext * /*ctx*/) override { }

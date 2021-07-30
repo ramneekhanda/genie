@@ -32,8 +32,17 @@ public:
   virtual void enterDo_action(GenieParser::Do_actionContext *ctx) = 0;
   virtual void exitDo_action(GenieParser::Do_actionContext *ctx) = 0;
 
+  virtual void enterDo_set(GenieParser::Do_setContext *ctx) = 0;
+  virtual void exitDo_set(GenieParser::Do_setContext *ctx) = 0;
+
   virtual void enterDo_statement(GenieParser::Do_statementContext *ctx) = 0;
   virtual void exitDo_statement(GenieParser::Do_statementContext *ctx) = 0;
+
+  virtual void enterDo_multiline_string(GenieParser::Do_multiline_stringContext *ctx) = 0;
+  virtual void exitDo_multiline_string(GenieParser::Do_multiline_stringContext *ctx) = 0;
+
+  virtual void enterAction_text(GenieParser::Action_textContext *ctx) = 0;
+  virtual void exitAction_text(GenieParser::Action_textContext *ctx) = 0;
 
   virtual void enterScenario_decl(GenieParser::Scenario_declContext *ctx) = 0;
   virtual void exitScenario_decl(GenieParser::Scenario_declContext *ctx) = 0;

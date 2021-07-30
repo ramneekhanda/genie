@@ -8,8 +8,12 @@ feature_defn: (note_defn)* FEATURE COLN quoted_words EOLN+;
 do_start: DO INT TIMES COLN EOLN+;
 do_end:  DONE EOLN+;
 do_loop: do_start (do_statement)* do_end;
-do_action: (ACT) (ACTION_TEXT)* EOA EOLN*;
-do_statement: do_loop | do_action;
+do_action: (ACT) action_text EOA EOLN*;
+do_set: SET IDENTIFIER AS (NUMBER|do_multiline_string) EOLN+;
+do_statement: do_loop | do_action | do_set;
+
+do_multiline_string: (EOLN_SET)? START_MULTILINE_TEXT (STR_TEXT|EOL)* END_MULTILINE_TEXT;
+action_text: ACTION_TEXT;
 
 scenario_decl: SCENARIO COLN quoted_words EOLN+;
 background_decl: BACKGROUND COLN EOLN+;

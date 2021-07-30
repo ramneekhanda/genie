@@ -14,19 +14,23 @@ public:
   enum {
     FRAGMENT = 1, BACKGROUND = 2, FEATURE = 3, TAGS = 4, SCENARIO = 5, STRING_QUOTES_OPEN = 6, 
     DO = 7, ACT = 8, DONE = 9, WS = 10, EOLN = 11, COLN = 12, PACKAGE_VERSION_SPLITTER = 13, 
-    LIST_ITEM = 14, SINGLE_LINE_COMMENT = 15, NOTE = 16, WORD = 17, ESC_QUOTE = 18, 
-    ESC_BACKSLASH = 19, SIMPLE_QUOTE = 20, STRING_QUOTES_CLOSE = 21, EOT = 22, 
-    TAG_WORD = 23, WS_TAGS = 24, EON = 25, NOTE_TEXT = 26, WS_NOTE = 27, 
-    EOLN_NOTE = 28, COLN_NOTE = 29, EOA = 30, ACTION_TEXT = 31, EOC = 32, 
-    COMMENT_TEXT = 33, INT = 34, TIMES = 35, WS_DO = 36
+    LIST_ITEM = 14, SINGLE_LINE_COMMENT = 15, NOTE = 16, SET = 17, AS = 18, 
+    NUMBER = 19, START_MULTILINE_TEXT = 20, WS_SET = 21, EOLN_SET = 22, 
+    IDENTIFIER = 23, STR_TEXT = 24, ESC_SEQ = 25, EOL = 26, END_MULTILINE_TEXT = 27, 
+    WORD = 28, ESC_QUOTE = 29, ESC_BACKSLASH = 30, SIMPLE_QUOTE = 31, STRING_QUOTES_CLOSE = 32, 
+    EOT = 33, TAG_WORD = 34, WS_TAGS = 35, EON = 36, NOTE_TEXT = 37, WS_NOTE = 38, 
+    EOLN_NOTE = 39, COLN_NOTE = 40, EOA = 41, ACTION_TEXT = 42, EOC = 43, 
+    COMMENT_TEXT = 44, INT = 45, TIMES = 46, WS_DO = 47
   };
 
   enum {
     RuleQuoted_words = 0, RuleFeature_defn = 1, RuleDo_start = 2, RuleDo_end = 3, 
-    RuleDo_loop = 4, RuleDo_action = 5, RuleDo_statement = 6, RuleScenario_decl = 7, 
-    RuleBackground_decl = 8, RuleFragment_decl = 9, RuleTag_defn = 10, RuleFragment_defn = 11, 
-    RuleBackground_defn = 12, RuleScenario_defn = 13, RuleNote_decl = 14, 
-    RuleNote_defn = 15, RuleNote_text = 16, RuleCommented_lines = 17, RuleFeature_file = 18
+    RuleDo_loop = 4, RuleDo_action = 5, RuleDo_set = 6, RuleDo_statement = 7, 
+    RuleDo_multiline_string = 8, RuleAction_text = 9, RuleScenario_decl = 10, 
+    RuleBackground_decl = 11, RuleFragment_decl = 12, RuleTag_defn = 13, 
+    RuleFragment_defn = 14, RuleBackground_defn = 15, RuleScenario_defn = 16, 
+    RuleNote_decl = 17, RuleNote_defn = 18, RuleNote_text = 19, RuleCommented_lines = 20, 
+    RuleFeature_file = 21
   };
 
   explicit GenieParser(antlr4::TokenStream *input);
@@ -45,7 +49,10 @@ public:
   class Do_endContext;
   class Do_loopContext;
   class Do_actionContext;
+  class Do_setContext;
   class Do_statementContext;
+  class Do_multiline_stringContext;
+  class Action_textContext;
   class Scenario_declContext;
   class Background_declContext;
   class Fragment_declContext;
@@ -153,10 +160,9 @@ public:
   public:
     Do_actionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
+    Action_textContext *action_text();
     antlr4::tree::TerminalNode *EOA();
     antlr4::tree::TerminalNode *ACT();
-    std::vector<antlr4::tree::TerminalNode *> ACTION_TEXT();
-    antlr4::tree::TerminalNode* ACTION_TEXT(size_t i);
     std::vector<antlr4::tree::TerminalNode *> EOLN();
     antlr4::tree::TerminalNode* EOLN(size_t i);
 
@@ -167,12 +173,32 @@ public:
 
   Do_actionContext* do_action();
 
+  class  Do_setContext : public antlr4::ParserRuleContext {
+  public:
+    Do_setContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *SET();
+    antlr4::tree::TerminalNode *IDENTIFIER();
+    antlr4::tree::TerminalNode *AS();
+    antlr4::tree::TerminalNode *NUMBER();
+    Do_multiline_stringContext *do_multiline_string();
+    std::vector<antlr4::tree::TerminalNode *> EOLN();
+    antlr4::tree::TerminalNode* EOLN(size_t i);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+   
+  };
+
+  Do_setContext* do_set();
+
   class  Do_statementContext : public antlr4::ParserRuleContext {
   public:
     Do_statementContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     Do_loopContext *do_loop();
     Do_actionContext *do_action();
+    Do_setContext *do_set();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -180,6 +206,38 @@ public:
   };
 
   Do_statementContext* do_statement();
+
+  class  Do_multiline_stringContext : public antlr4::ParserRuleContext {
+  public:
+    Do_multiline_stringContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *START_MULTILINE_TEXT();
+    antlr4::tree::TerminalNode *END_MULTILINE_TEXT();
+    antlr4::tree::TerminalNode *EOLN_SET();
+    std::vector<antlr4::tree::TerminalNode *> STR_TEXT();
+    antlr4::tree::TerminalNode* STR_TEXT(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> EOL();
+    antlr4::tree::TerminalNode* EOL(size_t i);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+   
+  };
+
+  Do_multiline_stringContext* do_multiline_string();
+
+  class  Action_textContext : public antlr4::ParserRuleContext {
+  public:
+    Action_textContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *ACTION_TEXT();
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+   
+  };
+
+  Action_textContext* action_text();
 
   class  Scenario_declContext : public antlr4::ParserRuleContext {
   public:

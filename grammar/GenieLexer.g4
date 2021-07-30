@@ -18,6 +18,21 @@ PACKAGE_VERSION_SPLITTER: '/';
 LIST_ITEM: '-';
 SINGLE_LINE_COMMENT: '#' -> pushMode(In_Comment);
 NOTE: ('note' | 'requirement' | 'bugid')  -> pushMode(In_Note);
+SET: 'set' -> pushMode(In_Set);
+
+mode In_Set;
+AS: 'as';
+NUMBER: [0-9]+ ('.'? [0-9]+)? -> popMode;
+START_MULTILINE_TEXT: '"""' -> pushMode(In_MultiLineText);
+WS_SET: ' ' -> channel(HIDDEN);
+EOLN_SET: '\r'? '\n';
+IDENTIFIER: [a-zA-Z_][a-zA-Z0-9_-]*;
+
+mode In_MultiLineText;
+STR_TEXT: ( ~["\r\n\\] | ESC_SEQ )+ ;
+ESC_SEQ : '\\' ( [btf"\\] );
+EOL     : '\r'? '\n' ;
+END_MULTILINE_TEXT: '"""' -> popMode, popMode;
 
 mode In_Quotes;
 WORD: ~[\r\n\\"]+;
