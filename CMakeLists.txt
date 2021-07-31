@@ -41,14 +41,21 @@ add_custom_target(grammar
   COMMAND java -Xmx500M -cp ${ANTLR4_BIN}:$$CLASSPATH org.antlr.v4.Tool -Dlanguage=Cpp ${PROJECT_SOURCE_DIR}/grammar/GenieLexer.g4  ${PROJECT_SOURCE_DIR}/grammar/GenieParser.g4 -o ${ANTLR_OUT_PATH})
 
 add_executable(genie ${GRAMMAR_FILES} src/main.cxx)
-add_executable(genieTests ${GRAMMAR_FILES} test/grammar/main.cxx)
+add_executable(grammarTests ${GRAMMAR_FILES} test/grammar/main.cxx)
+add_dependencies(genie grammar)
+add_dependencies(grammarTests grammar)
+
+add_custom_target(runGrammarTest 
+  COMMAND ${CMAKE_BINARY_DIR}/bin/grammarTests)
+add_dependencies(runGrammarTest grammarTests)
+
 
 target_compile_definitions(genie PUBLIC "-DANTLR4CPP_STATIC")
 target_include_directories(genie PUBLIC ${ANTLR_OUT_PATH} ${ANTLR4_INCLUDE_DIRS})
 target_link_directories(genie PUBLIC ${ANTLR4_LIBS_DIRS})
 target_link_libraries(genie PUBLIC ${ANTLR4_LIBS_DIRS}/libantlr4-runtime.a ${CONAN_LIBS})
 
-target_compile_definitions(genieTests PUBLIC "-DANTLR4CPP_STATIC")
-target_include_directories(genieTests PUBLIC ${ANTLR_OUT_PATH} ${ANTLR4_INCLUDE_DIRS})
-target_link_directories(genieTests PUBLIC ${ANTLR4_LIBS_DIRS})
-target_link_libraries(genieTests PUBLIC ${ANTLR4_LIBS_DIRS}/libantlr4-runtime.a ${CONAN_LIBS})
+target_compile_definitions(grammarTests PUBLIC "-DANTLR4CPP_STATIC")
+target_include_directories(grammarTests PUBLIC ${ANTLR_OUT_PATH} ${ANTLR4_INCLUDE_DIRS})
+target_link_directories(grammarTests PUBLIC ${ANTLR4_LIBS_DIRS})
+target_link_libraries(grammarTests PUBLIC ${ANTLR4_LIBS_DIRS}/libantlr4-runtime.a ${CONAN_LIBS})

@@ -13,8 +13,11 @@ int main(int argc, const char* argv[]) {
 
     ANTLRInputStream input(stream);
     GenieLexer lexer(&input);
+    
     CommonTokenStream tokens(&lexer);
     GenieParser parser(&tokens);
+
+
     parser.feature_file();
 
     return 0;

@@ -2,10 +2,12 @@ lexer grammar GenieLexer;
 
 fragment DIGIT: '0'..'9';
 
+// top level keywords
 FRAGMENT: 'fragment';
 BACKGROUND: 'background';
 FEATURE: 'feature';
 SCENARIO: 'scenario';
+NOTE: ('note' | 'requirement') COLN -> pushMode(In_Note);
 
 TAGS: '@tags' -> pushMode(In_Tags);
 STRING_QUOTES_OPEN: '"' -> pushMode(In_Quotes);
@@ -13,15 +15,15 @@ DO: 'do' -> pushMode(In_Do);
 ACT: ('given'|'when'|'then'|'and'|'but'|'call') -> pushMode(In_Act);
 DONE: 'done';
 WS: ' ' -> channel(HIDDEN);
-EOLN: '\n';
+EOLN: '\r'? '\n';
 END: 'end';
 COLN: ':';
-LIST_ITEM: '-';
-NOTE: ('note' | 'requirement') COLN -> pushMode(In_Note);
 SET: 'set' -> pushMode(In_Set);
 LANG_ID: [a-z0-9]+;
 START_CODE: '```' -> pushMode(In_Code);
-
+ErrorCharacter
+	:	.
+	;
 mode In_Code;
 CODE: ( ~[`"\r\n\\] | ESC_SEQ_CODE )* ;
 ESC_SEQ_CODE : '\\' ( [btf"`\\] );
@@ -52,14 +54,16 @@ STRING_QUOTES_CLOSE: '"' -> popMode;
 
 mode In_Tags;
 EOT: '\n' -> popMode;
-TAG_WORD: [a-zA-Z0-9]+;
+TAG_WORD: [a-zA-Z0-9_-]+;
 WS_TAGS: ' ' -> channel(HIDDEN);
 
 mode In_Note;
 EON: '...' -> popMode;
-NOTE_TEXT: [a-zA-Z0-9]*;
+NOTE_TEXT: (~[\r\n.]|ESC_DOT)*;
+ESC_DOT: '\\.';
+EOLN_NOTE: '\r'? '\n';
 WS_NOTE: ' ' -> channel(HIDDEN);
-EOLN_NOTE: '\n';
+ErrorChar: '.';
 
 mode In_Act;
 EOA: '\n' -> popMode;

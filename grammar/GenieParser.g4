@@ -31,5 +31,5 @@ note_decl: NOTE (note_text)+ EOLN+;
 note_defn: note_decl;
 note_text: (NOTE_TEXT | EOLN_NOTE)* EON;
 
-feature_defn: (note_defn)* FEATURE COLN quoted_string EOLN+;
+feature_defn: EOLN* (note_defn)* FEATURE COLN quoted_string EOLN+;
 feature_file: feature_defn background_defn? (fragment_defn|scenario_defn)* EOF;
