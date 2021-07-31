@@ -1,10 +1,21 @@
 cmake_minimum_required(VERSION 3.10)
 set(CMAKE_GENERATOR "Ninja")
-
 project("genie")
 
+# Download automatically, you can also just copy the conan.cmake file
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+   message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+   file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
+                  "${CMAKE_BINARY_DIR}/conan.cmake")
+endif()
+include(${CMAKE_BINARY_DIR}/conan.cmake)
+conan_cmake_run(REQUIRES argparse/2.1 
+                fmt/7.1.3
+                doctest/2.4.6
+                GENERATORS cmake_find_package
+                BASIC_SETUP)
 # compiler must be 11 or 14
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 # required if linking to static library
 # using /MD flag for antlr4_runtime (for Visual C++ compilers only)
@@ -30,7 +41,14 @@ add_custom_target(grammar
   COMMAND java -Xmx500M -cp ${ANTLR4_BIN}:$$CLASSPATH org.antlr.v4.Tool -Dlanguage=Cpp ${PROJECT_SOURCE_DIR}/grammar/GenieLexer.g4  ${PROJECT_SOURCE_DIR}/grammar/GenieParser.g4 -o ${ANTLR_OUT_PATH})
 
 add_executable(genie ${GRAMMAR_FILES} src/main.cxx)
+add_executable(genieTests ${GRAMMAR_FILES} test/grammar/main.cxx)
+
 target_compile_definitions(genie PUBLIC "-DANTLR4CPP_STATIC")
 target_include_directories(genie PUBLIC ${ANTLR_OUT_PATH} ${ANTLR4_INCLUDE_DIRS})
 target_link_directories(genie PUBLIC ${ANTLR4_LIBS_DIRS})
-target_link_libraries(genie PUBLIC ${ANTLR4_LIBS_DIRS}/libantlr4-runtime.a)
+target_link_libraries(genie PUBLIC ${ANTLR4_LIBS_DIRS}/libantlr4-runtime.a ${CONAN_LIBS})
+
+target_compile_definitions(genieTests PUBLIC "-DANTLR4CPP_STATIC")
+target_include_directories(genieTests PUBLIC ${ANTLR_OUT_PATH} ${ANTLR4_INCLUDE_DIRS})
+target_link_directories(genieTests PUBLIC ${ANTLR4_LIBS_DIRS})
+target_link_libraries(genieTests PUBLIC ${ANTLR4_LIBS_DIRS}/libantlr4-runtime.a ${CONAN_LIBS})

@@ -19,9 +19,6 @@ public:
   virtual void enterQuoted_string(GenieParser::Quoted_stringContext * /*ctx*/) override { }
   virtual void exitQuoted_string(GenieParser::Quoted_stringContext * /*ctx*/) override { }
 
-  virtual void enterFeature_defn(GenieParser::Feature_defnContext * /*ctx*/) override { }
-  virtual void exitFeature_defn(GenieParser::Feature_defnContext * /*ctx*/) override { }
-
   virtual void enterDo_start(GenieParser::Do_startContext * /*ctx*/) override { }
   virtual void exitDo_start(GenieParser::Do_startContext * /*ctx*/) override { }
 
@@ -85,8 +82,8 @@ public:
   virtual void enterNote_text(GenieParser::Note_textContext * /*ctx*/) override { }
   virtual void exitNote_text(GenieParser::Note_textContext * /*ctx*/) override { }
 
-  virtual void enterCommented_lines(GenieParser::Commented_linesContext * /*ctx*/) override { }
-  virtual void exitCommented_lines(GenieParser::Commented_linesContext * /*ctx*/) override { }
+  virtual void enterFeature_defn(GenieParser::Feature_defnContext * /*ctx*/) override { }
+  virtual void exitFeature_defn(GenieParser::Feature_defnContext * /*ctx*/) override { }
 
   virtual void enterFeature_file(GenieParser::Feature_fileContext * /*ctx*/) override { }
   virtual void exitFeature_file(GenieParser::Feature_fileContext * /*ctx*/) override { }

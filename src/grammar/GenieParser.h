@@ -12,27 +12,26 @@
 class  GenieParser : public antlr4::Parser {
 public:
   enum {
-    FRAGMENT = 1, BACKGROUND = 2, FEATURE = 3, TAGS = 4, SCENARIO = 5, STRING_QUOTES_OPEN = 6, 
+    FRAGMENT = 1, BACKGROUND = 2, FEATURE = 3, SCENARIO = 4, TAGS = 5, STRING_QUOTES_OPEN = 6, 
     DO = 7, ACT = 8, DONE = 9, WS = 10, EOLN = 11, END = 12, COLN = 13, 
-    PACKAGE_VERSION_SPLITTER = 14, LIST_ITEM = 15, SINGLE_LINE_COMMENT = 16, 
-    NOTE = 17, SET = 18, LANG_ID = 19, START_CODE = 20, CODE = 21, ESC_SEQ_CODE = 22, 
-    EOL_CODE = 23, END_CODE = 24, AS = 25, NUMBER = 26, START_MULTILINE_TEXT = 27, 
-    WS_SET = 28, EOLN_SET = 29, IDENTIFIER = 30, STR_TEXT = 31, ESC_SEQ = 32, 
-    EOL = 33, END_MULTILINE_TEXT = 34, WORD = 35, ESC_QUOTE = 36, ESC_BACKSLASH = 37, 
-    SIMPLE_QUOTE = 38, STRING_QUOTES_CLOSE = 39, EOT = 40, TAG_WORD = 41, 
-    WS_TAGS = 42, EON = 43, NOTE_TEXT = 44, WS_NOTE = 45, EOLN_NOTE = 46, 
-    COLN_NOTE = 47, EOA = 48, ACTION_TEXT = 49, EOC = 50, COMMENT_TEXT = 51, 
-    INT = 52, TIMES = 53, WS_DO = 54
+    LIST_ITEM = 14, NOTE = 15, SET = 16, LANG_ID = 17, START_CODE = 18, 
+    CODE = 19, ESC_SEQ_CODE = 20, EOL_CODE = 21, END_CODE = 22, AS = 23, 
+    NUMBER = 24, START_MULTILINE_TEXT = 25, SET_STRING_QUOTES_OPEN = 26, 
+    WS_SET = 27, EOLN_SET = 28, IDENTIFIER = 29, STR_TEXT = 30, ESC_SEQ = 31, 
+    EOL = 32, END_MULTILINE_TEXT = 33, WORD = 34, ESC_QUOTE = 35, ESC_BACKSLASH = 36, 
+    SIMPLE_QUOTE = 37, STRING_QUOTES_CLOSE = 38, EOT = 39, TAG_WORD = 40, 
+    WS_TAGS = 41, EON = 42, NOTE_TEXT = 43, WS_NOTE = 44, EOLN_NOTE = 45, 
+    EOA = 46, ACTION_TEXT = 47, INT = 48, TIMES = 49, WS_DO = 50
   };
 
   enum {
-    RuleQuoted_string = 0, RuleFeature_defn = 1, RuleDo_start = 2, RuleDo_end = 3, 
-    RuleDo_loop = 4, RuleDo_action = 5, RuleDo_set = 6, RuleDo_statement = 7, 
-    RuleDo_ffi = 8, RuleDo_code = 9, RuleDo_multiline_string = 10, RuleAction_text = 11, 
-    RuleScenario_decl = 12, RuleBackground_decl = 13, RuleFragment_decl = 14, 
-    RuleFragment_decl2 = 15, RuleTag_defn = 16, RuleFragment_defn = 17, 
-    RuleBackground_defn = 18, RuleScenario_defn = 19, RuleNote_decl = 20, 
-    RuleNote_defn = 21, RuleNote_text = 22, RuleCommented_lines = 23, RuleFeature_file = 24
+    RuleQuoted_string = 0, RuleDo_start = 1, RuleDo_end = 2, RuleDo_loop = 3, 
+    RuleDo_action = 4, RuleDo_set = 5, RuleDo_statement = 6, RuleDo_ffi = 7, 
+    RuleDo_code = 8, RuleDo_multiline_string = 9, RuleAction_text = 10, 
+    RuleScenario_decl = 11, RuleBackground_decl = 12, RuleFragment_decl = 13, 
+    RuleFragment_decl2 = 14, RuleTag_defn = 15, RuleFragment_defn = 16, 
+    RuleBackground_defn = 17, RuleScenario_defn = 18, RuleNote_decl = 19, 
+    RuleNote_defn = 20, RuleNote_text = 21, RuleFeature_defn = 22, RuleFeature_file = 23
   };
 
   explicit GenieParser(antlr4::TokenStream *input);
@@ -46,7 +45,6 @@ public:
 
 
   class Quoted_stringContext;
-  class Feature_defnContext;
   class Do_startContext;
   class Do_endContext;
   class Do_loopContext;
@@ -68,15 +66,16 @@ public:
   class Note_declContext;
   class Note_defnContext;
   class Note_textContext;
-  class Commented_linesContext;
+  class Feature_defnContext;
   class Feature_fileContext; 
 
   class  Quoted_stringContext : public antlr4::ParserRuleContext {
   public:
     Quoted_stringContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *STRING_QUOTES_OPEN();
     antlr4::tree::TerminalNode *STRING_QUOTES_CLOSE();
+    antlr4::tree::TerminalNode *SET_STRING_QUOTES_OPEN();
+    antlr4::tree::TerminalNode *STRING_QUOTES_OPEN();
     std::vector<antlr4::tree::TerminalNode *> SIMPLE_QUOTE();
     antlr4::tree::TerminalNode* SIMPLE_QUOTE(size_t i);
     std::vector<antlr4::tree::TerminalNode *> ESC_QUOTE();
@@ -92,25 +91,6 @@ public:
   };
 
   Quoted_stringContext* quoted_string();
-
-  class  Feature_defnContext : public antlr4::ParserRuleContext {
-  public:
-    Feature_defnContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *FEATURE();
-    antlr4::tree::TerminalNode *COLN();
-    Quoted_stringContext *quoted_string();
-    std::vector<Note_defnContext *> note_defn();
-    Note_defnContext* note_defn(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> EOLN();
-    antlr4::tree::TerminalNode* EOLN(size_t i);
-
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
-   
-  };
-
-  Feature_defnContext* feature_defn();
 
   class  Do_startContext : public antlr4::ParserRuleContext {
   public:
@@ -187,6 +167,7 @@ public:
     antlr4::tree::TerminalNode *AS();
     antlr4::tree::TerminalNode *NUMBER();
     Do_multiline_stringContext *do_multiline_string();
+    Quoted_stringContext *quoted_string();
     std::vector<antlr4::tree::TerminalNode *> EOLN();
     antlr4::tree::TerminalNode* EOLN(size_t i);
 
@@ -432,7 +413,6 @@ public:
     Note_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *NOTE();
-    antlr4::tree::TerminalNode *COLN_NOTE();
     std::vector<Note_textContext *> note_text();
     Note_textContext* note_text(size_t i);
     std::vector<antlr4::tree::TerminalNode *> EOLN();
@@ -475,25 +455,24 @@ public:
 
   Note_textContext* note_text();
 
-  class  Commented_linesContext : public antlr4::ParserRuleContext {
+  class  Feature_defnContext : public antlr4::ParserRuleContext {
   public:
-    Commented_linesContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    Feature_defnContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    std::vector<antlr4::tree::TerminalNode *> SINGLE_LINE_COMMENT();
-    antlr4::tree::TerminalNode* SINGLE_LINE_COMMENT(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> EOC();
-    antlr4::tree::TerminalNode* EOC(size_t i);
+    antlr4::tree::TerminalNode *FEATURE();
+    antlr4::tree::TerminalNode *COLN();
+    Quoted_stringContext *quoted_string();
+    std::vector<Note_defnContext *> note_defn();
+    Note_defnContext* note_defn(size_t i);
     std::vector<antlr4::tree::TerminalNode *> EOLN();
     antlr4::tree::TerminalNode* EOLN(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> COMMENT_TEXT();
-    antlr4::tree::TerminalNode* COMMENT_TEXT(size_t i);
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
    
   };
 
-  Commented_linesContext* commented_lines();
+  Feature_defnContext* feature_defn();
 
   class  Feature_fileContext : public antlr4::ParserRuleContext {
   public:

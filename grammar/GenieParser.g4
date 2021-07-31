@@ -2,14 +2,13 @@ parser grammar GenieParser;
 
 options {   tokenVocab = GenieLexer; }
 
-quoted_string: STRING_QUOTES_OPEN (SIMPLE_QUOTE|ESC_QUOTE|WORD|ESC_BACKSLASH)* STRING_QUOTES_CLOSE;
-feature_defn: (note_defn)* FEATURE COLN quoted_string EOLN+;
+quoted_string: (SET_STRING_QUOTES_OPEN|STRING_QUOTES_OPEN) (SIMPLE_QUOTE|ESC_QUOTE|WORD|ESC_BACKSLASH)* STRING_QUOTES_CLOSE;
 
 do_start: DO INT TIMES COLN EOLN+;
 do_end:  DONE EOLN+;
 do_loop: do_start (do_statement)* do_end;
 do_action: (ACT) action_text EOA EOLN*;
-do_set: SET IDENTIFIER AS (NUMBER|do_multiline_string) EOLN+;
+do_set: SET IDENTIFIER AS (NUMBER|do_multiline_string|quoted_string) EOLN+;
 do_statement: do_loop | do_action | do_set;
 do_ffi: do_code;
 
@@ -28,10 +27,9 @@ fragment_defn: (note_defn)* (fragment_decl (do_statement)* | fragment_decl2 do_f
 background_defn: (note_defn)* background_decl (do_statement)* END EOLN+;
 scenario_defn: (note_defn)* (tag_defn)* scenario_decl (do_statement)* END EOLN+;
 
-note_decl: NOTE COLN_NOTE (note_text)+ EOLN+;
+note_decl: NOTE (note_text)+ EOLN+;
 note_defn: note_decl;
 note_text: (NOTE_TEXT | EOLN_NOTE)* EON;
 
-commented_lines: (SINGLE_LINE_COMMENT (COMMENT_TEXT)* EOC)+ EOLN*;
-
-feature_file: feature_defn background_defn? (fragment_defn)* (scenario_defn)* EOF;
+feature_defn: (note_defn)* FEATURE COLN quoted_string EOLN+;
+feature_file: feature_defn background_defn? (fragment_defn|scenario_defn)* EOF;

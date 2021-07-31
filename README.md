@@ -7,5 +7,6 @@
   - [ ] Fragments
     - [ ] Code Fragments
   - [ ] Set Statements
-  - [ ] Loop Contructs
+  - [ ] Loop Contruct
   - [ ] Scenario
+

@@ -1,4 +1,4 @@
-note: ...
+const char *code = R"ABCD(note: ...
 
 note: asd
       asd...
@@ -41,7 +41,7 @@ return a + b;
 ```
 end
 
-fragment lua: "add using lua"
+fragment lua: "add {a}, {b} using lua"
 ```
 ```
 end
@@ -74,3 +74,4 @@ note: asd
 @tags sdasd
 scenario: ""
 end
+)ABCD";

@@ -17,9 +17,6 @@ public:
   virtual void enterQuoted_string(GenieParser::Quoted_stringContext *ctx) = 0;
   virtual void exitQuoted_string(GenieParser::Quoted_stringContext *ctx) = 0;
 
-  virtual void enterFeature_defn(GenieParser::Feature_defnContext *ctx) = 0;
-  virtual void exitFeature_defn(GenieParser::Feature_defnContext *ctx) = 0;
-
   virtual void enterDo_start(GenieParser::Do_startContext *ctx) = 0;
   virtual void exitDo_start(GenieParser::Do_startContext *ctx) = 0;
 
@@ -83,8 +80,8 @@ public:
   virtual void enterNote_text(GenieParser::Note_textContext *ctx) = 0;
   virtual void exitNote_text(GenieParser::Note_textContext *ctx) = 0;
 
-  virtual void enterCommented_lines(GenieParser::Commented_linesContext *ctx) = 0;
-  virtual void exitCommented_lines(GenieParser::Commented_linesContext *ctx) = 0;
+  virtual void enterFeature_defn(GenieParser::Feature_defnContext *ctx) = 0;
+  virtual void exitFeature_defn(GenieParser::Feature_defnContext *ctx) = 0;
 
   virtual void enterFeature_file(GenieParser::Feature_fileContext *ctx) = 0;
   virtual void exitFeature_file(GenieParser::Feature_fileContext *ctx) = 0;
