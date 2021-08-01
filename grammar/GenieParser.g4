@@ -2,34 +2,33 @@ parser grammar GenieParser;
 
 options {   tokenVocab = GenieLexer; }
 
-quoted_string: (SET_STRING_QUOTES_OPEN|STRING_QUOTES_OPEN) (SIMPLE_QUOTE|ESC_QUOTE|WORD|ESC_BACKSLASH)* STRING_QUOTES_CLOSE;
+quoted_string: (SET_STRING_QUOTES_OPEN|STRING_QUOTES_OPEN) (ESC_QUOTE|ESC_STRING_NONL|ESC_BACKSLASH)* STRING_QUOTES_CLOSE;
+featureName: (SET_STRING_QUOTES_OPEN|STRING_QUOTES_OPEN) (ESC_QUOTE|ESC_STRING_NONL|ESC_BACKSLASH)* STRING_QUOTES_CLOSE;
+callSignature: (SET_STRING_QUOTES_OPEN|STRING_QUOTES_OPEN) (ESC_QUOTE|ESC_STRING_NONL|ESC_BACKSLASH)* STRING_QUOTES_CLOSE;
 
-do_start: DO INT TIMES COLN EOLN+;
-do_end:  DONE EOLN+;
-do_loop: do_start (do_statement)* do_end;
-do_action: (ACT) action_text EOA EOLN*;
-do_set: SET IDENTIFIER AS (NUMBER|do_multiline_string|quoted_string) EOLN+;
-do_statement: do_loop | do_action | do_set;
-do_ffi: do_code;
+loopBegin: DO INT TIMES COLN EOLN+;
+loopEnd:  DONE EOLN+;
+loop: loopBegin (statement)* loopEnd;
+callFunction: (ACT) function EOA EOLN*;
+callSet: SET IDENTIFIER AS (NUMBER|multilineString|quoted_string) EOLN+;
+statement: loop | callFunction | callSet;
 
-do_code: START_CODE (CODE|EOL_CODE)* END_CODE EOLN+;
-do_multiline_string: (EOLN_SET)? START_MULTILINE_TEXT (STR_TEXT|EOL)* END_MULTILINE_TEXT;
-action_text: ACTION_TEXT;
+codeBlock: START_CODE (CODE)* END_CODE EOLN+;
+multilineString: (EOLN_SET)? START_MULTILINE_TEXT (STR_TEXT|EOL)* END_MULTILINE_TEXT;
+function: ACTION_TEXT;
 
-scenario_decl: SCENARIO COLN quoted_string EOLN+;
-background_decl: BACKGROUND COLN EOLN+;
-fragment_decl: FRAGMENT (COLN) quoted_string EOLN+;
-fragment_decl2: FRAGMENT (LANG_ID COLN) quoted_string EOLN+;
+scenarioDecl: SCENARIO COLN callSignature EOLN+;
+backgroundDecl: BACKGROUND COLN EOLN+;
+fragmentDecl: FRAGMENT (COLN) callSignature EOLN+;
+fragmentDecl2: FRAGMENT (LANG_ID COLN) callSignature EOLN+;
 
 tag_defn: TAGS (TAG_WORD)* EOT EOLN*;
 
-fragment_defn: (note_defn)* (fragment_decl (do_statement)* | fragment_decl2 do_ffi) END EOLN+;
-background_defn: (note_defn)* background_decl (do_statement)* END EOLN+;
-scenario_defn: (note_defn)* (tag_defn)* scenario_decl (do_statement)* END EOLN+;
+fragmentDefn: (note)* (fragmentDecl (statement)* | fragmentDecl2 codeBlock) END EOLN+;
+backgroundDefn: (note)* backgroundDecl (statement)* END EOLN+;
+scenarioDefn: (note)* (tag_defn)* scenarioDecl (statement)* END EOLN+;
+featureDefn: EOLN* (note)* FEATURE COLN featureName EOLN+;
 
-note_decl: NOTE (note_text)+ EOLN+;
-note_defn: note_decl;
-note_text: (NOTE_TEXT | EOLN_NOTE)* EON;
+note: NOTE (NOTE_TEXT)* EON EOLN+;
 
-feature_defn: EOLN* (note_defn)* FEATURE COLN quoted_string EOLN+;
-feature_file: feature_defn background_defn? (fragment_defn|scenario_defn)* EOF;
+featureFile: featureDefn backgroundDefn? (fragmentDefn|scenarioDefn)* EOF;

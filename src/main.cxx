@@ -18,7 +18,7 @@ int main(int argc, const char* argv[]) {
     GenieParser parser(&tokens);
 
 
-    parser.feature_file();
+    parser.featureFile();
 
     return 0;
 }

@@ -41,7 +41,6 @@ public:
 
 TEST_CASE("test basic function")
 {
-
     std::string rawCode(code);
     ANTLRInputStream input(rawCode);
     GenieLexer lexer(&input);
@@ -49,5 +48,5 @@ TEST_CASE("test basic function")
     CommonTokenStream tokens(&lexer);
     GenieParser parser(&tokens);
     parser.addErrorListener(new ErrorListener());
-    parser.feature_file();
+    parser.featureFile();
 }

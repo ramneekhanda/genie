@@ -7,7 +7,7 @@ FRAGMENT: 'fragment';
 BACKGROUND: 'background';
 FEATURE: 'feature';
 SCENARIO: 'scenario';
-NOTE: ('note' | 'requirement') COLN -> pushMode(In_Note);
+NOTE: ('note' | 'requirement' | 'Description' | 'Desc' | 'Explanation' | 'Summary') COLN -> pushMode(In_Note);
 
 TAGS: '@tags' -> pushMode(In_Tags);
 STRING_QUOTES_OPEN: '"' -> pushMode(In_Quotes);
@@ -21,13 +21,11 @@ COLN: ':';
 SET: 'set' -> pushMode(In_Set);
 LANG_ID: [a-z0-9]+;
 START_CODE: '```' -> pushMode(In_Code);
-ErrorCharacter
-	:	.
-	;
+ERROR_TOKEN: .;
+
 mode In_Code;
-CODE: ( ~[`"\r\n\\] | ESC_SEQ_CODE )* ;
-ESC_SEQ_CODE : '\\' ( [btf"`\\] );
-EOL_CODE     : '\r' ? '\n' ;
+CODE: ( ~[`] | ESC_SEQ_CODE )+ ;
+ESC_SEQ_CODE : '\\`';
 END_CODE: '```' -> popMode;
 
 mode In_Set;
@@ -46,11 +44,11 @@ EOL     : '\r'? '\n' ;
 END_MULTILINE_TEXT: '"""' -> popMode, popMode;
 
 mode In_Quotes;
-WORD: ~[\r\n\\"]+;
+ESC_STRING_NONL: (~[\r\n\\"]+|WS_INQUOTES);
 ESC_QUOTE: '\\"';
 ESC_BACKSLASH: '\\\\';
-SIMPLE_QUOTE: '\\';
 STRING_QUOTES_CLOSE: '"' -> popMode;
+WS_INQUOTES: ' ';
 
 mode In_Tags;
 EOT: '\n' -> popMode;
@@ -59,11 +57,9 @@ WS_TAGS: ' ' -> channel(HIDDEN);
 
 mode In_Note;
 EON: '...' -> popMode;
-NOTE_TEXT: (~[\r\n.]|ESC_DOT)*;
+NOTE_TEXT: (~[.]|ESC_DOT)+;
 ESC_DOT: '\\.';
-EOLN_NOTE: '\r'? '\n';
-WS_NOTE: ' ' -> channel(HIDDEN);
-ErrorChar: '.';
+ERROR_TOKEN_NOTE: .;
 
 mode In_Act;
 EOA: '\n' -> popMode;

@@ -12,6 +12,7 @@ include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_cmake_run(REQUIRES argparse/2.1 
                 fmt/7.1.3
                 doctest/2.4.6
+                glfw/3.3.4
                 GENERATORS cmake_find_package
                 BASIC_SETUP)
 # compiler must be 11 or 14
@@ -42,6 +43,7 @@ add_custom_target(grammar
 
 add_executable(genie ${GRAMMAR_FILES} src/main.cxx)
 add_executable(grammarTests ${GRAMMAR_FILES} test/grammar/main.cxx)
+
 add_dependencies(genie grammar)
 add_dependencies(grammarTests grammar)
 

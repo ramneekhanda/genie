@@ -1,4 +1,4 @@
-note: ...
+note: abc ...
 
 note: asd
       asd...
@@ -27,7 +27,7 @@ fragment: "subtract {A} from {B} as {C}"
     given i subtract {A} from {B}
     and store result in {C}
     set aNumber as 9
-    set aString as "a long asdasd string"
+    set aString as """a long asdasd string"""
     set aMultiLineText as
     """a long asdasd
     string"""
