@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 set(CMAKE_GENERATOR "Ninja")
 project("genie")
+set(CMAKE_CXX_STANDARD 17)
 
 # Download automatically, you can also just copy the conan.cmake file
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
@@ -12,11 +13,9 @@ include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_cmake_run(REQUIRES argparse/2.1 
                 fmt/7.1.3
                 doctest/2.4.6
-                glfw/3.3.4
                 GENERATORS cmake_find_package
                 BASIC_SETUP)
 # compiler must be 11 or 14
-set(CMAKE_CXX_STANDARD 17)
 
 set(ANTLR4_WITH_STATIC_CRT OFF)
 set(ANTLR_OUT_PATH ${PROJECT_SOURCE_DIR}/grammar/generated)

@@ -28,8 +28,7 @@ fragment: "subtract {A} from {B} as {C}"
     and store result in {C}
     set aNumber as 9
     set aString as """a long asdasd string"""
-    set aMultiLineText as
-    """a long asdasd
+    set aMultiLineText as """a long asdasd
     string"""
 end
 
@@ -42,8 +41,8 @@ fragment js: "add {a}, {b} using nodejs"
 end
 
 fragment lua: "add {a}, {b} using lua"
-```
-```
+    ```
+    ```
 end
 
 note: asd
@@ -51,8 +50,7 @@ note: asd
 
 fragment: "get {N}th row {J}th column from csv"
     set aVar as 9
-    set aVal as
-    """ramneek
+    set aVal as """ramneek
     handa"""
 end
 
@@ -73,4 +71,8 @@ note: asd
 
 @tags sdasd
 scenario: ""
+with examples:
+|a|
+|7*&^%^%&&%^%   asdasd|
+|asdasd|
 end

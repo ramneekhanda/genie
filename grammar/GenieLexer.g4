@@ -1,14 +1,15 @@
 lexer grammar GenieLexer;
 
+fragment COLN: ':';
 fragment DIGIT: '0'..'9';
-
 // top level keywords
-FRAGMENT: 'fragment';
-BACKGROUND: 'background';
-FEATURE: 'feature';
-SCENARIO: 'scenario';
-NOTE: ('note' | 'requirement' | 'Description' | 'Desc' | 'Explanation' | 'Summary') COLN -> pushMode(In_Note);
+FRAGMENT: 'fragment' -> pushMode(In_Frag_Decl);
+BACKGROUND: 'background' WS* COLN ;
+FEATURE: 'feature' WS* COLN ;
+SCENARIO: 'scenario' WS* COLN ;
 
+NOTE: ('note' | 'requirement' | 'description' | 'desc' | 'explanation' | 'summary') WS* COLN -> pushMode(In_Note);
+WITH_EXAMPLES: 'with' WS* 'examples' WS* COLN EOLN+;
 TAGS: '@tags' -> pushMode(In_Tags);
 STRING_QUOTES_OPEN: '"' -> pushMode(In_Quotes);
 DO: 'do' -> pushMode(In_Do);
@@ -17,11 +18,21 @@ DONE: 'done';
 WS: ' ' -> channel(HIDDEN);
 EOLN: '\r'? '\n';
 END: 'end';
-COLN: ':';
 SET: 'set' -> pushMode(In_Set);
-LANG_ID: [a-z0-9]+;
 START_CODE: '```' -> pushMode(In_Code);
+TABLE_START: '|' ->pushMode(In_Table_Row);
 ERROR_TOKEN: .;
+
+mode In_Table_Row;
+COL_DELIM: '|';
+DATA: ( ~[|(\r\n)] | ESC_DELIM )+;
+ESC_DELIM: '\\|';
+ROW_EOLN: '\r'? '\n' -> popMode;
+
+mode In_Frag_Decl;
+LANG_ID: [a-z0-9]+;
+COLN_FRAG: ':' -> popMode;
+WS_FD: ' ';
 
 mode In_Code;
 CODE: ( ~[`] | ESC_SEQ_CODE )+ ;
@@ -30,18 +41,18 @@ END_CODE: '```' -> popMode;
 
 mode In_Set;
 AS: 'as';
-NUMBER: [0-9]+ ('.'? [0-9]+)? -> popMode;
+NUMBER: DIGIT+ ('.'? DIGIT+)?;
 START_MULTILINE_TEXT: '"""' -> pushMode(In_MultiLineText);
 SET_STRING_QUOTES_OPEN: '"' -> pushMode(In_Quotes);
 WS_SET: ' ' -> channel(HIDDEN);
-EOLN_SET: '\r'? '\n';
+EOLN_SET: '\r'? '\n' -> popMode;
 IDENTIFIER: [a-zA-Z_][a-zA-Z0-9_-]*;
 
 mode In_MultiLineText;
 STR_TEXT: ( ~["\r\n\\] | ESC_SEQ )+ ;
 ESC_SEQ : '\\' ( [btf"\\] );
 EOL     : '\r'? '\n' ;
-END_MULTILINE_TEXT: '"""' -> popMode, popMode;
+END_MULTILINE_TEXT: '"""' -> popMode;
 
 mode In_Quotes;
 ESC_STRING_NONL: (~[\r\n\\"]+|WS_INQUOTES);
@@ -62,10 +73,11 @@ ESC_DOT: '\\.';
 ERROR_TOKEN_NOTE: .;
 
 mode In_Act;
-EOA: '\n' -> popMode;
+EOA: '\r'? '\n' -> popMode;
 ACTION_TEXT: ~[\r\n]+;
 
 mode In_Do;
 INT: DIGIT+;
-TIMES: 'times' -> popMode;
+DO_COLN: ':';
+TIMES: 'times' WS_DO* DO_COLN -> popMode;
 WS_DO: ' ' -> channel(HIDDEN);

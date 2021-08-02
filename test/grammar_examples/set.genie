@@ -1,0 +1,22 @@
+feature: "test is an amzing thing"
+
+fragment: "add {a}, {b} using nodejs"
+  set a as "ramneek"
+  set b as 9
+  set c as 9.00
+  set d as """ this is a multiline string
+  which will is quite awesome"""
+  set d as """ this is another multiline string """
+end
+
+fragment js: "add {a},     {b} using blah"
+```
+```
+end
+
+scenario: "addition works between a and b"
+
+with examples:
+|a|b|
+|||
+end
