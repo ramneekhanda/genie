@@ -34,11 +34,11 @@ fragment: "subtract {A} from {B} as {C}"
 end
 
 fragment js: "add {a}, {b} using nodejs"
-```
-let a = {a};
-let b = {b};
-return a + b;
-```
+    ```
+    let a = {a};
+    let b = {b};
+    return a + b;
+    ```
 end
 
 fragment lua: "add {a}, {b} using lua"

@@ -18,28 +18,24 @@ conan_cmake_run(REQUIRES argparse/2.1
 # compiler must be 11 or 14
 set(CMAKE_CXX_STANDARD 17)
 
-# required if linking to static library
-# using /MD flag for antlr4_runtime (for Visual C++ compilers only)
 set(ANTLR4_WITH_STATIC_CRT OFF)
-set(ANTLR4_BIN ${PROJECT_SOURCE_DIR}/antlr/bin/antlr-4.9.2-complete.jar)
-
+set(ANTLR_OUT_PATH ${PROJECT_SOURCE_DIR}/grammar/generated)
 set(ANTLR4_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/antlr/antlr4-runtime-mac/antlr4-runtime/)
 set(ANTLR4_LIBS_DIRS ${PROJECT_SOURCE_DIR}/antlr/antlr4-runtime-mac/lib)
 
-# add antrl4cpp artifacts to project environment
-include_directories(${ANTLR4_INCLUDE_DIRS})
+add_subdirectory(grammar)
+
 
 # set variable pointing to the antlr tool that supports C++
 # this is not required if the jar file can be found under PATH environment
-set(ANTLR_EXECUTABLE ${PROJECT_SOURCE_DIR}/antlr/bin/antlr-4.9.1-complete.jar)
+#set(ANTLR_EXECUTABLE ${PROJECT_SOURCE_DIR}/antlr/bin/antlr-4.9.1-complete.jar)
 
 set(CMAKE_CXX_FLAGS "-Wall" )
-set(ANTLR_OUT_PATH ${PROJECT_SOURCE_DIR}/src/grammar)
 
 file(GLOB GRAMMAR_FILES ${ANTLR_OUT_PATH}/*.cpp)
 
-add_custom_target(grammar
-  COMMAND java -Xmx500M -cp ${ANTLR4_BIN}:$$CLASSPATH org.antlr.v4.Tool -Dlanguage=Cpp ${PROJECT_SOURCE_DIR}/grammar/GenieLexer.g4  ${PROJECT_SOURCE_DIR}/grammar/GenieParser.g4 -o ${ANTLR_OUT_PATH})
+#add_custom_target(grammar
+#  COMMAND java -Xmx500M -cp ${ANTLR4_BIN}:$$CLASSPATH org.antlr.v4.Tool -Dlanguage=Cpp ${PROJECT_SOURCE_DIR}/grammar/GenieLexer.g4  ${PROJECT_SOURCE_DIR}/grammar/GenieParser.g4 -o ${ANTLR_OUT_PATH})
 
 add_executable(genie ${GRAMMAR_FILES} src/main.cxx)
 add_executable(grammarTests ${GRAMMAR_FILES} test/grammar/main.cxx)

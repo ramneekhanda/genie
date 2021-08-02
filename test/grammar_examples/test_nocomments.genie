@@ -1,0 +1,16 @@
+feature: "something"
+
+scenario: "asd! is not?"
+    given we was out
+    do 5 times:
+        given we send myself to moon
+    done
+
+with examples:
+    |a|b|s|
+    |1|2|3|
+end
+
+scenario: "aasd"
+    given shit hit the fam
+end

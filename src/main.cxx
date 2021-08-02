@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include <antlr4-runtime.h>
-#include "grammar/GenieLexer.h"
-#include "grammar/GenieParser.h"
+#include <GenieLexer.h>
+#include <GenieParser.h>
 
 using namespace std;
 using namespace antlr4;
