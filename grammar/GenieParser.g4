@@ -6,13 +6,17 @@ quoted_string: SET_STRING_QUOTES_OPEN (ESC_QUOTE|ESC_STRING_NONL|ESC_BACKSLASH)*
 featureName: STRING_QUOTES_OPEN (ESC_QUOTE|ESC_STRING_NONL|ESC_BACKSLASH)* STRING_QUOTES_CLOSE;
 callSignature: STRING_QUOTES_OPEN (ESC_QUOTE|ESC_STRING_NONL|ESC_BACKSLASH)* STRING_QUOTES_CLOSE;
 
+fragPath: STRING_QUOTES_OPEN_UF (ESC_QUOTE|ESC_STRING_NONL|ESC_BACKSLASH)* STRING_QUOTES_CLOSE;
+usesFragment: USES_FRAGMENT fragPath AS_UF FRAGNAME EOLN_UF EOLN*;
+
+usingFragment: USING_FRAGMENT FRAGNAME_USING EOLN_USING EOLN*;
 loopBegin: DO INT TIMES EOLN+;
 loopEnd:  DONE EOLN+;
 loop: loopBegin (statement)* loopEnd;
 listFunction: EOA_LIST function;
 callFunction: (ACT) ((listFunction)+ | function) EOA EOLN*;
 callSet: SET IDENTIFIER AS (NUMBER|multilineString|quoted_string) EOLN_SET+;
-statement: loop | callFunction | callSet;
+statement: loop | callFunction | callSet | usingFragment;
 tableHeader: TABLE_START (DATA COL_DELIM)+ ROW_EOLN EOLN*;
 tableRow: TABLE_START (DATA? COL_DELIM)+ ROW_EOLN EOLN*;
 table: tableHeader (tableRow)+;
@@ -37,4 +41,7 @@ featureDefn: EOLN* (note)* FEATURE featureName EOLN+;
 
 note: NOTE (NOTE_TEXT)* EON EOLN+;
 
-featureFile: featureDefn backgroundDefn? (fragDefn|scenarioDefn)* EOF;
+featureFile: featureDefn (usesFragment)* backgroundDefn? (fragDefn|scenarioDefn)* EOF;
+fragmentsFile: (usesFragment)* (fragDefn)* EOF;
+
+genieFile: (featureFile | fragmentsFile) EOF;

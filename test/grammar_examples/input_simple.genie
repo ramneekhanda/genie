@@ -7,10 +7,13 @@ requirement: something...
 
 feature: "something"
 
+uses fragment "a/b" as web
+
 note: asd
       asd...
 
 background:
+    using fragment web
     given
         - have 10 dollars
         - dont have any other money
@@ -29,6 +32,7 @@ note: asd
 note: ...
 
 fragment: "subtract {A} from {B} as {C}"
+    using fragment web
     given i subtract {A} from {B}
     and store result in {C}
     set aNumber as 9

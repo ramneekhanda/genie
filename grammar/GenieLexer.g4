@@ -7,6 +7,8 @@ FRAGMENT: 'fragment' -> pushMode(In_Frag_Decl);
 BACKGROUND: 'background' WS* COLN ;
 FEATURE: 'feature' WS* COLN ;
 SCENARIO: 'scenario' WS* COLN ;
+USES_FRAGMENT: 'uses' WS* 'fragment' WS+ -> pushMode (In_Uses_Frag);
+USING_FRAGMENT: 'using' WS* 'fragment' -> pushMode (In_Using_Frag);
 
 NOTE: ('note' | 'requirement' | 'description' | 'desc' | 'explanation' | 'summary') WS* COLN -> pushMode(In_Note);
 WITH_EXAMPLES: 'with' WS* 'examples' WS* COLN EOLN+;
@@ -22,6 +24,18 @@ SET: 'set' -> pushMode(In_Set);
 START_CODE: '```' -> pushMode(In_Code);
 TABLE_START: '|' ->pushMode(In_Table_Row);
 ERROR_TOKEN: .;
+
+mode In_Using_Frag;
+FRAGNAME_USING: [a-zA-Z]+;
+EOLN_USING: '\r'? '\n' -> popMode;
+WS_USNG_FRAG: ' ' -> skip;
+
+mode In_Uses_Frag;
+STRING_QUOTES_OPEN_UF: '"' -> pushMode(In_Quotes);
+AS_UF: 'as';
+EOLN_UF: '\r'? '\n' -> popMode;
+FRAGNAME: [a-zA-Z]+;
+WS_USES_FRAG: ' ' -> skip;
 
 mode In_Table_Row;
 COL_DELIM: '|';
