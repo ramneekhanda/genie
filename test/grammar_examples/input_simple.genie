@@ -11,7 +11,12 @@ note: asd
       asd...
 
 background:
-    given i have 10 dollars
+    given
+        - have 10 dollars
+        - dont have any other money
+        - like to spend
+    then
+        - feel good about myself
     do 10 times:
         and i spend 1 dollar <kjhjkh> "gfhf"
     done

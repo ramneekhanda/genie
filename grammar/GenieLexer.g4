@@ -73,8 +73,11 @@ ESC_DOT: '\\.';
 ERROR_TOKEN_NOTE: .;
 
 mode In_Act;
+EOA_LIST: ('\r'? '\n')+ WS_ACT* LIST_ITEM;
 EOA: '\r'? '\n' -> popMode;
-ACTION_TEXT: ~[\r\n]+;
+ACTION_TEXT: (~[\r\n])+;
+LIST_ITEM: '-';
+WS_ACT: ' ';
 
 mode In_Do;
 INT: DIGIT+;

@@ -9,7 +9,8 @@ callSignature: STRING_QUOTES_OPEN (ESC_QUOTE|ESC_STRING_NONL|ESC_BACKSLASH)* STR
 loopBegin: DO INT TIMES EOLN+;
 loopEnd:  DONE EOLN+;
 loop: loopBegin (statement)* loopEnd;
-callFunction: (ACT) function EOA EOLN*;
+listFunction: EOA_LIST function;
+callFunction: (ACT) ((listFunction)+ | function) EOA EOLN*;
 callSet: SET IDENTIFIER AS (NUMBER|multilineString|quoted_string) EOLN_SET+;
 statement: loop | callFunction | callSet;
 tableHeader: TABLE_START (DATA COL_DELIM)+ ROW_EOLN EOLN*;

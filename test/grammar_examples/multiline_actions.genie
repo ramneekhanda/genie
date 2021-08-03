@@ -1,0 +1,14 @@
+feature: "something"
+
+background:
+    given
+        - I have 10 dollars
+        - I dont have any other money
+        - I like to spend
+    then
+        - I feel good about myself
+    do 10 times:
+        and i spend 1 dollar <kjhjkh> "gfhf"
+    done
+    then i have 0 dollars left
+end
