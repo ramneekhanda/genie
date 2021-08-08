@@ -10,7 +10,6 @@
 #include <filesystem>
 #include <iostream>
 
-#include "code.hxx"
 
 using namespace std;
 using namespace antlr4;
@@ -67,6 +66,7 @@ void checkGrammar(string filename) {
   CommonTokenStream tokens(&lexer);
   GenieParser parser(&tokens);
   parser.addErrorListener(&e);
+  
   parser.featureFile();
   CHECK_MESSAGE(e.errors.size() == 0, e.errors.size(), " errors found in file ", filename);
 }

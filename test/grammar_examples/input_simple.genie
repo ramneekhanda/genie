@@ -7,21 +7,36 @@ requirement: something...
 
 feature: "something"
 
-uses fragment "a/b" as web
+uses fragment "web.gfrag" as web
+uses fragment "console.gfrag" as console
 
 note: asd
       asd...
 
 background:
     using fragment web
+
     given
         - have 10 dollars
         - dont have any other money
         - like to spend
+        
+    set abc as 1
     then
         - feel good about myself
+        | name    | class |
+        | ramneek | 2     |
+
+        - i do something else
+        | name    | class |
+        | ramneek | 2     |
+        | abc     | 3     |
+
     do 10 times:
-        and i spend 1 dollar <kjhjkh> "gfhf"
+        given i spend $abc dollar
+        | name    | class |
+        | ramneek | 5     |
+
     done
     then i have 0 dollars left
 end
@@ -32,10 +47,14 @@ note: asd
 note: ...
 
 fragment: "subtract {A} from {B} as {C}"
+
     using fragment web
+
     given i subtract {A} from {B}
+
     and store result in {C}
     set aNumber as 9
+    
     set aString as """a long asdasd string"""
     set aMultiLineText as """a long asdasd
     string"""

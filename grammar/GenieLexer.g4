@@ -9,6 +9,7 @@ FEATURE: 'feature' WS* COLN ;
 SCENARIO: 'scenario' WS* COLN ;
 USES_FRAGMENT: 'uses' WS* 'fragment' WS+ -> pushMode (In_Uses_Frag);
 USING_FRAGMENT: 'using' WS* 'fragment' -> pushMode (In_Using_Frag);
+FRAGMENT_FILE: 'fragment' WS* 'file' WS* COLN;
 
 NOTE: ('note' | 'requirement' | 'description' | 'desc' | 'explanation' | 'summary') WS* COLN -> pushMode(In_Note);
 WITH_EXAMPLES: 'with' WS* 'examples' WS* COLN EOLN+;
@@ -87,11 +88,13 @@ ESC_DOT: '\\.';
 ERROR_TOKEN_NOTE: .;
 
 mode In_Act;
-EOA_LIST: ('\r'? '\n')+ WS_ACT* LIST_ITEM;
-EOA: '\r'? '\n' -> popMode;
-ACTION_TEXT: (~[\r\n])+;
+fragment NL: ('\r'? '\n')+ WS_ACT*;
+EOA_LIST: WS_ACT* NL* LIST_ITEM;
+IN_ACT_TABLE_START: ('\r'? '\n')* WS_ACT* '|' -> pushMode(In_Table_Row);
+EOA:  WS_ACT* '\r'? '\n' WS_ACT* -> popMode;
+ACTION_TEXT: (~[\r\n|])+;
 LIST_ITEM: '-';
-WS_ACT: ' ';
+WS_ACT: ' ' -> channel(HIDDEN);
 
 mode In_Do;
 INT: DIGIT+;

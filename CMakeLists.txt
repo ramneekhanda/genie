@@ -13,6 +13,9 @@ include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_cmake_run(REQUIRES argparse/2.1 
                 fmt/7.1.3
                 doctest/2.4.6
+                libffi/3.4.2
+                lua/5.4.1
+                nlohmann_json/3.9.1 
                 GENERATORS cmake_find_package
                 BASIC_SETUP)
 # compiler must be 11 or 14
@@ -23,7 +26,7 @@ set(ANTLR4_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/antlr/antlr4-runtime-mac/antlr4-ru
 set(ANTLR4_LIBS_DIRS ${PROJECT_SOURCE_DIR}/antlr/antlr4-runtime-mac/lib)
 
 add_subdirectory(grammar)
-
+add_subdirectory(experimental/ffi)
 
 # set variable pointing to the antlr tool that supports C++
 # this is not required if the jar file can be found under PATH environment
@@ -36,7 +39,7 @@ file(GLOB GRAMMAR_FILES ${ANTLR_OUT_PATH}/*.cpp)
 #add_custom_target(grammar
 #  COMMAND java -Xmx500M -cp ${ANTLR4_BIN}:$$CLASSPATH org.antlr.v4.Tool -Dlanguage=Cpp ${PROJECT_SOURCE_DIR}/grammar/GenieLexer.g4  ${PROJECT_SOURCE_DIR}/grammar/GenieParser.g4 -o ${ANTLR_OUT_PATH})
 
-add_executable(genie ${GRAMMAR_FILES} src/main.cxx)
+add_executable(genie ${GRAMMAR_FILES} src/main.cxx src/lualang.cxx)
 add_executable(grammarTests ${GRAMMAR_FILES} test/grammar/main.cxx)
 
 add_dependencies(genie grammar)
@@ -47,10 +50,10 @@ add_custom_target(runGrammarTest
 add_dependencies(runGrammarTest grammarTests)
 
 
-target_compile_definitions(genie PUBLIC "-DANTLR4CPP_STATIC")
+target_compile_definitions(genie PUBLIC "-DANTLR4CPP_STATIC" "-D__STDC_CONSTANT_MACROS" "-D__STDC_LIMIT_MACROS")
 target_include_directories(genie PUBLIC ${ANTLR_OUT_PATH} ${ANTLR4_INCLUDE_DIRS})
 target_link_directories(genie PUBLIC ${ANTLR4_LIBS_DIRS})
-target_link_libraries(genie PUBLIC ${ANTLR4_LIBS_DIRS}/libantlr4-runtime.a ${CONAN_LIBS})
+target_link_libraries(genie PRIVATE ${CONAN_LIBS} ${ANTLR4_LIBS_DIRS}/libantlr4-runtime.a )
 
 target_compile_definitions(grammarTests PUBLIC "-DANTLR4CPP_STATIC")
 target_include_directories(grammarTests PUBLIC ${ANTLR_OUT_PATH} ${ANTLR4_INCLUDE_DIRS})
