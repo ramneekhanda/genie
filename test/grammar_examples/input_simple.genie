@@ -45,16 +45,14 @@ note: asd
       asd...
 
 note: ...
-
 fragment: "subtract {A} from {B} as {C}"
-
     using fragment web
 
     given i subtract {A} from {B}
 
     and store result in {C}
     set aNumber as 9
-    
+
     set aString as """a long asdasd string"""
     set aMultiLineText as """a long asdasd
     string"""

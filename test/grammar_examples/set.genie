@@ -9,7 +9,7 @@ fragment: "add {a}, {b} using nodejs"
   set d as """ this is another multiline string """
 end
 
-fragment js: "add {a},     {b} using blah"
+fragment js: "add {a}, {b} using blah"
 ```
 ```
 end

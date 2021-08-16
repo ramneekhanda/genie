@@ -13,12 +13,12 @@
 using namespace std;
 using namespace antlr4;
 
-typedef std::unordered_map<string, shared_ptr<GenieParser::FragmentsFileContext>> FragmentsMap;
+typedef std::unordered_map<string, shared_ptr<GenieParser>> FragmentsMap;
 vector<string> fragmentsSearchPaths;
 
 struct Parsed {
-  GenieParser::FeatureFileContext* featureFile;
   FragmentsMap fragments;
+  shared_ptr<GenieParser> featureFile;
 };
 
 typedef shared_ptr<Parsed> ParsedPtr;
@@ -32,10 +32,9 @@ void buildFragmentParseTree(shared_ptr<Parsed> parsed, string asString, string f
   GenieLexer lexer(&input);
 
   CommonTokenStream tokens(&lexer);
-  GenieParser parser(&tokens);
+  GenieParser *parser = new GenieParser(&tokens);
 
-  GenieParser::FragmentsFileContext* ptr = parser.fragmentsFile();
-  parsed->fragments[asString] = shared_ptr<GenieParser::FragmentsFileContext>(ptr);
+  parsed->fragments[asString] = shared_ptr<GenieParser>(parser);
   stream.close();
 }
 
@@ -48,10 +47,11 @@ shared_ptr<Parsed> buildFeatureParseTree(string filename) {
   GenieLexer lexer(&input);
 
   CommonTokenStream tokens(&lexer);
-  GenieParser parser(&tokens);
+  GenieParser *parser = new GenieParser(&tokens);
 
-  GenieParser::FeatureFileContext* ptr = parser.featureFile();
+  GenieParser::FeatureFileContext* ptr = parser->featureFile();
   if (ptr) {
+    parsedPtr->featureFile = shared_ptr<GenieParser>(parser);
     std::vector<GenieParser::UsesFragmentContext*> uv = ptr->usesFragment();
     if (uv.size() > 0) {
       for (int i = 0; i < uv.size(); i++) {
@@ -96,7 +96,6 @@ int main(int argc, const char* argv[]) {
   }
   string file = program.get<string>("filename");
   std::filesystem::path filePath(file);
-  std::cout << std::filesystem::canonical(filePath.parent_path()).string() << std::endl;
   fragmentsSearchPaths.push_back(std::filesystem::canonical(filePath.parent_path()).string());
   buildFeatureParseTree(file);
   return 0;
