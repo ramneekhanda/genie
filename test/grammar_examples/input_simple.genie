@@ -54,7 +54,7 @@ fragment: "subtract {A} from {B} as {C}"
     set aNumber as 9
 
     set aString as """a long asdasd string"""
-    set aMultiLineText as """a long asdasd
+    set aMultiLineText as """a long asdas
     string"""
 end
 

@@ -9,12 +9,14 @@
 
 #include "lualang.hxx"
 #include "store.hxx"
+#include "errors.hxx"
 
 using namespace std;
 using namespace antlr4;
 
 typedef std::unordered_map<string, shared_ptr<GenieParser>> FragmentsMap;
 vector<string> fragmentsSearchPaths;
+ErrorListener el;
 
 struct Parsed {
   FragmentsMap fragments;
@@ -30,10 +32,13 @@ void buildFragmentParseTree(shared_ptr<Parsed> parsed, string asString, string f
 
   ANTLRInputStream input(stream);
   GenieLexer lexer(&input);
-
+  lexer.removeErrorListeners();
+  
   CommonTokenStream tokens(&lexer);
   GenieParser *parser = new GenieParser(&tokens);
-
+  parser->removeErrorListeners();
+  parser->addErrorListener(&el);
+  
   parsed->fragments[asString] = shared_ptr<GenieParser>(parser);
   stream.close();
 }
@@ -45,9 +50,12 @@ shared_ptr<Parsed> buildFeatureParseTree(string filename) {
 
   ANTLRInputStream input(stream);
   GenieLexer lexer(&input);
-
+  lexer.removeErrorListeners();
+  
   CommonTokenStream tokens(&lexer);
   GenieParser *parser = new GenieParser(&tokens);
+  parser->removeErrorListeners();
+  parser->addErrorListener(&el);
 
   GenieParser::FeatureFileContext* ptr = parser->featureFile();
   if (ptr) {
@@ -71,7 +79,9 @@ shared_ptr<Parsed> buildFeatureParseTree(string filename) {
             std::cout << "fragment file " << uv[i]->qFragPath()->fragPath()->getText() << " was not found" <<std::endl;
             exit(-1);
         }
+        el.pushFile(fragPath);
         buildFragmentParseTree(parsedPtr, uv[i]->FRAGNAME()->getText(), fragPath);
+        el.popFile();
       }
     }
     stream.close();
@@ -97,6 +107,14 @@ int main(int argc, const char* argv[]) {
   string file = program.get<string>("filename");
   std::filesystem::path filePath(file);
   fragmentsSearchPaths.push_back(std::filesystem::canonical(filePath.parent_path()).string());
+  el.pushFile(file);
   buildFeatureParseTree(file);
+  el.popFile();
+  if (el.hasErrors()) {
+    std::cout << el << std::endl;
+    return -1;
+  } else {
+
+  }
   return 0;
 }

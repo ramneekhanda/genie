@@ -46,6 +46,6 @@ usesFragment: (note)* USES_FRAGMENT qFragPath AS_UF FRAGNAME EOLN_UF EOLN*;
 note: NOTE (NOTE_TEXT)* EON EOLN+;
 
 featureFile: featureDefn (usesFragment)* backgroundDefn? (fragDefn|scenarioDefn)* EOF;
-fragmentsFile: fragFileDefn (usesFragment)* (fragDefn)* EOF;
+fragmentsFile: fragFileDefn (fragDefn)* EOF;
 
 genieFile: (featureFile | fragmentsFile) EOF;
